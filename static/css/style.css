@@ -1,0 +1,8 @@
+.div-query {
+    display: flex;
+    flex-direction: row;
+}
+
+.btn-query {
+    margin-left: 10px;
+}
