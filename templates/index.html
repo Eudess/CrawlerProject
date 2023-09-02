@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PJE Consulta</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div>
+        <h1>Consulta de processo no PJE</h1>
+    </div>
+    <div>
+        <form action="/numero_processo" method="post">
+            <div class="div-query">
+                <div>
+                    <label>Número do processo:</label>
+                    <input type="text"  name="numero_processo" id="numero_processo">
+                </div>
+                <div class="btn-query">
+                    <input type="submit" value="Consultar" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>
