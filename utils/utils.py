@@ -7,7 +7,7 @@ def is_npu(npu):
 
 def formatter_npu(npu):
     npu_clean = clean_npu(npu)
-    formatted_npu = f"{npu_clean[:7]}-{npu_clean[7:9]}.{npu_clean[9:13]}.{npu_clean[13:14]}.{npu_clean[14:]}"
+    formatted_npu = f"{npu_clean[:7]}-{npu_clean[7:9]}.{npu_clean[9:13]}.{npu_clean[13:14]}.{npu_clean[14:16]}.{npu_clean[16:]}"
     return formatted_npu
 
 
