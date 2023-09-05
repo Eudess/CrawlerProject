@@ -1,0 +1,1 @@
+START_URL = "https://esaj.tjce.jus.br/cpopg/open.do"
