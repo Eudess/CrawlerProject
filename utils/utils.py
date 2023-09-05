@@ -15,3 +15,10 @@ def clean_npu(npu):
     regex = r'\d+'
     numbers = re.findall(regex, npu)
     return "".join(numbers)
+
+def get_tribunal(npu):
+    tribunal = f"{npu[16:20]}"
+    if tribunal == "8.02":
+        return "tjal"
+    elif tribunal == "8.06":
+        return "tjce"
