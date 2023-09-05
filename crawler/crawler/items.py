@@ -12,4 +12,8 @@ class HeaderItem(scrapy.Item):
     assunto = scrapy.Field()
     data_distribuicao = scrapy.Field()
     juiz = scrapy.Field()
-    pass
+
+class PartesItem(scrapy.Item):
+    nome = scrapy.Field()
+    papel = scrapy.Field()
+
