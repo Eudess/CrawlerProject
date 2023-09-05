@@ -1,6 +1,6 @@
 import scrapy
 from scrapy.shell import inspect_response
-from crawler.items import HeaderItem
+from crawler.items import *
 from .constants.constants import *
 from .constants.extract import *
 
@@ -37,13 +37,31 @@ class SpiderBase(scrapy.Spider):
         data_distribuicao = response.xpath(HEADER_XPATH["data_distribuicao"]).re_first(REGEX["distri"])
         juiz = response.xpath(HEADER_XPATH["juiz"]).re_first(REGEX["juiz"])
 
-        yield self.extract_partes
-        yield self.extrat_andamentos
-        yield HeaderItem(classe=classe, area=area, assunto=assunto, data_distribuicao=data_distribuicao, juiz=juiz)
+        item = HeaderItem()
+        item['classe'] = classe
+        item['area'] = area
+        item['assunto'] = assunto
+        item['data_distribuicao'] = data_distribuicao
+        item['juiz'] = juiz
+
+        yield from self.extract_partes(response)
+        yield from self.extrat_andamentos(response)
+        yield item
 
     def extract_partes(self, response):
-        pass
+        partes = response.xpath(PARTES_XPATH["table"])
+        for parte in partes:
+            papel = parte.xpath(PARTES_XPATH["papel"]).get()
+            nome = parte.xpath(PARTES_XPATH["nome"]).get()
 
+            item = PartesItem()
+            item['nome'] = nome.strip()
+            item['papel'] = papel.strip()
+
+
+            yield item
+
+            
     def extrat_andamentos(self, response):
         pass
 
