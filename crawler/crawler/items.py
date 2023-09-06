@@ -17,3 +17,6 @@ class PartesItem(scrapy.Item):
     nome = scrapy.Field()
     papel = scrapy.Field()
 
+class MovimentacoesItem(scrapy.Item):
+    data = scrapy.Field()
+    texto = scrapy.Field()
