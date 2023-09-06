@@ -20,7 +20,7 @@ def query_process_number():
     return render_template('process.html')
 
 def start_spider_ce(process_number):
-   os.system("cd crawler && scrapy crawl esaj_tjce -a numero_processo=" + process_number)
+   os.system("cd crawler && scrapy crawl esaj_tjce-1-grau -a numero_processo=" + process_number)
 
 if __name__ == '__main__':
     app.run(debug=True)
