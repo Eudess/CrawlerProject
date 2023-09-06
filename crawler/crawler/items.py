@@ -20,3 +20,8 @@ class PartesItem(scrapy.Item):
 class MovimentacoesItem(scrapy.Item):
     data = scrapy.Field()
     texto = scrapy.Field()
+
+class ProcessoItem(scrapy.Item):
+    header = scrapy.Field()
+    partes = scrapy.Field()
+    movimentacoes = scrapy.Field()
