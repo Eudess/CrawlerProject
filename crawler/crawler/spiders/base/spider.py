@@ -37,16 +37,23 @@ class SpiderBase(scrapy.Spider):
         data_distribuicao = response.xpath(HEADER_XPATH["data_distribuicao"]).re_first(REGEX["distri"])
         juiz = response.xpath(HEADER_XPATH["juiz"]).re_first(REGEX["juiz"])
 
-        item = HeaderItem()
-        item['classe'] = classe
-        item['area'] = area
-        item['assunto'] = assunto
-        item['data_distribuicao'] = data_distribuicao
-        item['juiz'] = juiz
+        header_item = HeaderItem()
+        header_item['classe'] = classe
+        header_item['area'] = area
+        header_item['assunto'] = assunto
+        header_item['data_distribuicao'] = data_distribuicao
+        header_item['juiz'] = juiz
 
-        yield item
-        yield from self.extract_partes(response)
-        yield from self.extrat_movimentacoes(response)
+        
+        partes_items = list(self.extract_partes(response))
+        movimentacoes_items = list(self.extrat_movimentacoes(response))
+
+        processo_item = ProcessoItem()
+        processo_item['header'] = header_item
+        processo_item['partes'] = partes_items
+        processo_item['movimentacoes'] = movimentacoes_items
+
+        yield processo_item
 
     def extract_partes(self, response):
         partes = response.xpath(PARTES_XPATH["table"])
