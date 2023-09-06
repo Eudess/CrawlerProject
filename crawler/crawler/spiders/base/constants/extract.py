@@ -12,6 +12,12 @@ PARTES_XPATH = {
     "nome": "./td[contains(@class, 'nomeParteEAdvogado')]/text()"
 }
 
+MOVIMENTACOES_XPATH = {
+    "table": "//tbody[contains(@id, 'tabelaTodasMovimentacoes')]//tr",
+    "data": "./td[contains(@class, 'dataMovimentacao')]/text()",
+    "texto": "./td[contains(@class, 'descricaoMovimentacao') and normalize-space(.) != '']/text()"
+}
+
 REGEX = {
     "distri": r"\d+\/\d+\/\d+",
     "juiz": r"Nome do juiz\(a\): (.+)\sNome"
