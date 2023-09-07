@@ -1,4 +1,6 @@
 import os
+import subprocess
+import json
 from flask import Flask, jsonify, render_template, request
 from utils import utils
 
@@ -15,12 +17,28 @@ def query_process_number():
     tribunal = utils.get_tribunal(formatted_process_number)
     if tribunal == "tjce":
         spider_logs = start_spider_ce(formatted_process_number)
-        return render_template('process.html', spider_logs=spider_logs)
+        process_files = read_process_files(formatted_process_number)
+        return render_template('process.html', spider_logs=spider_logs, process_data=process_files[0])
 
     return render_template('process.html')
 
 def start_spider_ce(process_number):
-   os.system("cd crawler && scrapy crawl esaj_tjce-1-grau -a numero_processo=" + process_number)
+    cmd = f"cd crawler && scrapy crawl esaj_tjce-1-grau -a numero_processo={process_number}"
+    subprocess.run(cmd, shell=True, check=True, text=True)
+
+
+def read_process_files(process_number):
+    process_files = []
+    
+    if os.path.exists('crawler/processo'):
+        for filename in os.listdir('crawler/processo'):
+            if filename.endswith('.json') and process_number in filename:
+                filepath = os.path.join('crawler/processo', filename)
+                with open(filepath, 'r', encoding='utf-8') as json_file:
+                    data = json.load(json_file)
+                    process_files.append(data)
+    
+    return process_files
 
 if __name__ == '__main__':
     app.run(debug=True)
