@@ -1,9 +1,13 @@
 {% extends "index.html" %}
 {% block content %}
 <div>
-    <h1>Detalhes do Processo</h1>
+    <h1>Detalhes do Processo do {{ 'tjal' if 'esaj_tjal-1-grau' in process_data else 'tjce' }}</h1>
     <h2>Cabeçalho:</h2>
-    {% set new_header = process_data['esaj_tjce-1-grau']['header'] %}
+    {% if 'esaj_tjce-1-grau' in process_data and 'header' in process_data['esaj_tjce-1-grau'] %}
+        {% set new_header = process_data['esaj_tjce-1-grau']['header'] %}
+    {% elif 'esaj_tjal-1-grau' in process_data and 'header' in process_data['esaj_tjal-1-grau'] %}
+        {% set new_header = process_data['esaj_tjal-1-grau']['header'] %}
+    {% endif %}
     <ul>
         <li>Classe: {{ new_header['classe'] }}</li>
         <li>Área: {{ new_header['area'] }}</li>
@@ -13,7 +17,12 @@
     </ul>
     <h2>Partes:</h2>
     <ul>
-        {% for parte in process_data['esaj_tjce-1-grau']['partes'] %}
+        {% if 'esaj_tjce-1-grau' in process_data and 'header' in process_data['esaj_tjce-1-grau'] %}
+        {% set new_partes = process_data['esaj_tjce-1-grau']['partes'] %}
+        {% elif 'esaj_tjal-1-grau' in process_data and 'header' in process_data['esaj_tjal-1-grau'] %}
+            {% set new_partes = process_data['esaj_tjal-1-grau']['partes'] %}
+        {% endif %}
+        {% for parte in new_partes %}
         <li>{{ parte['nome'] }} ({{ parte['papel'] }})</li>
         {% endfor %}
     </ul>
