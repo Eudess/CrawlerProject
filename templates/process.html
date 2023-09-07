@@ -1,4 +1,21 @@
 {% extends "index.html" %}
 {% block content %}
-<div></div>
+<div>
+    <h1>Detalhes do Processo</h1>
+    <h2>Cabeçalho:</h2>
+    {% set new_header = process_data['esaj_tjce-1-grau']['header'] %}
+    <ul>
+        <li>Classe: {{ new_header['classe'] }}</li>
+        <li>Área: {{ new_header['area'] }}</li>
+        <li>Assunto: {{ new_header['assunto'] }}</li>
+        <li>Data de Distribuição: {{ new_header['data_distribuicao'] }}</li>
+        <li>Juiz: {{ new_header['juiz'] }}</li>
+    </ul>
+    <h2>Partes:</h2>
+    <ul>
+        {% for parte in process_data['esaj_tjce-1-grau']['partes'] %}
+        <li>{{ parte['nome'] }} ({{ parte['papel'] }})</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
