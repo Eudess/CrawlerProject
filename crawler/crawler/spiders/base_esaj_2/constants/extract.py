@@ -9,7 +9,7 @@ HEADER_XPATH = {
 }
 
 PARTES_XPATH = {
-    "table": "//table[contains(@id, 'tableTodasPartes')]//tr",
+    "table": "//table[contains(@id, 'tableTodasPartes') or contains(@id, 'tablePartesPrincipais')]//tr",
     "papel": "./td/span[contains(@class, 'tipoDePartici')]/text()",
     "nome": "./td[contains(@class, 'nomeParteEAdvogado')]/text()"
 }
