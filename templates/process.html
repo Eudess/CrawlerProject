@@ -27,4 +27,32 @@
         {% endfor %}
     </ul>
 </div>
+{% if 'esaj_tjce-2-grau' in process_data2 or 'esaj_tjal-2-grau' in process_data2 %}
+<div>
+    <h2>Cabeçalho (2º Grau):</h2>
+    <ul>
+        {% if 'esaj_tjce-2-grau' in process_data2 and 'header' in process_data2['esaj_tjce-2-grau'] %}
+            {% set new_header = process_data2['esaj_tjce-2-grau']['header'] %}
+        {% elif 'esaj_tjal-2-grau' in process_data2 and 'header' in process_data2['esaj_tjal-2-grau'] %}
+            {% set new_header = process_data2['esaj_tjal-2-grau']['header'] %}
+        {% endif %}
+        <li>Classe: {{ new_header['classe'] }}</li>
+        <li>Área: {{ new_header['area'] }}</li>
+        <li>Assunto: {{ new_header['assunto'] }}</li>
+        <li>Data de Distribuição: {{ new_header['data_distribuicao'] }}</li>
+        <li>Juiz: {{ new_header['juiz'] }}</li>
+    </ul>
+    <h2>Partes (2º Grau):</h2>
+    <ul>
+        {% if 'esaj_tjce-2-grau' in process_data2 and 'partes' in process_data2['esaj_tjce-2-grau'] %}
+            {% set new_partes = process_data2['esaj_tjce-2-grau']['partes'] %}
+        {% elif 'esaj_tjal-2-grau' in process_data2 and 'partes' in process_data2['esaj_tjal-2-grau'] %}
+            {% set new_partes = process_data2['esaj_tjal-2-grau']['partes'] %}
+        {% endif %}
+        {% for parte in new_partes %}
+        <li>{{ parte['nome'] }} ({{ parte['papel'] }})</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
 {% endblock %}
