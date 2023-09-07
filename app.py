@@ -1,7 +1,7 @@
 import os
 import subprocess
 import json
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, render_template, request
 from utils import utils
 
 app = Flask(__name__)
@@ -17,12 +17,14 @@ def query_process_number():
     tribunal = utils.get_tribunal(formatted_process_number)
     if tribunal == "tjce":
         spider_logs = start_spider_ce(formatted_process_number)
+        spider_logs = start_spider_ce2(formatted_process_number)
         process_files = read_process_files(formatted_process_number)
-        return render_template('process.html', spider_logs=spider_logs, process_data=process_files[0])
+        return render_template('process.html', spider_logs=spider_logs, process_data=process_files[0], process_data2=process_files[1])
     elif tribunal == "tjal":
         spider_logs = start_spider_al(formatted_process_number)
+        spider_logs = start_spider_al2(formatted_process_number)
         process_files = read_process_files(formatted_process_number)
-        return render_template('process.html', spider_logs=spider_logs, process_data=process_files[0])
+        return render_template('process.html', spider_logs=spider_logs, process_data=process_files[0], process_data2=process_files[1])
 
     return render_template('process.html')
 
@@ -32,6 +34,14 @@ def start_spider_ce(process_number):
 
 def start_spider_al(process_number):
     cmd = f"cd crawler && scrapy crawl esaj_tjal-1-grau -a numero_processo={process_number}"
+    subprocess.run(cmd, shell=True, check=True, text=True)
+
+def start_spider_ce2(process_number):
+    cmd = f"cd crawler && scrapy crawl esaj_tjce-2-grau -a numero_processo={process_number}"
+    subprocess.run(cmd, shell=True, check=True, text=True)
+
+def start_spider_al2(process_number):
+    cmd = f"cd crawler && scrapy crawl esaj_tjal-2-grau -a numero_processo={process_number}"
     subprocess.run(cmd, shell=True, check=True, text=True)
 
 
