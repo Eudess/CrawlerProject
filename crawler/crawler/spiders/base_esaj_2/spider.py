@@ -1,5 +1,4 @@
 import scrapy
-from scrapy.shell import inspect_response
 from crawler.items import *
 from .constants.constants import *
 from .constants.extract import *
@@ -37,17 +36,15 @@ class SpiderBaseEsaj2(scrapy.Spider):
         }
 
         url = response.url
-        new_url = url.replace("open", "search")
+        new_url = url.replace("search", "show")
         
         yield scrapy.FormRequest(url=new_url, 
                                     formdata=formdata,
-                                    headers=response.request.headers,
                                     callback=self.extract_header,
             )
 
 
     def extract_header(self, response):
-        # inspect_response(response, self)
         classe = response.xpath(HEADER_XPATH["general"].format("classeProcesso")).get()
         area = response.xpath(HEADER_XPATH["general"].format("areaProcesso")).get()
         assunto = response.xpath(HEADER_XPATH["general"].format("assuntoProcesso")).get()
