@@ -6,6 +6,7 @@
 
 # useful for handling different item types with a single interface
 import json
+import os
 from itemadapter import ItemAdapter
 
 
@@ -25,9 +26,15 @@ class CrawlerPipeline:
             }
         }
 
+        filename = f"{spider.process_number}_{spider.name}.json"
+
+        if not os.path.exists('processo'):
+                os.makedirs('processo')
+
+        filepath = os.path.join('processo/', filename)
         processo_json = json.dumps(processo, ensure_ascii=False)
 
-        with open('processo.json', 'w', encoding='utf-8') as json_file:
+        with open(filepath, 'w', encoding='utf-8') as json_file:
             json_file.write(processo_json)
 
         return item
